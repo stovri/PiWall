@@ -1,5 +1,5 @@
 <?php
-//Test
+
 if (!isset ($NAME_FILE_PHP_FILE)){
 	$NAME_FILE_PHP_FILE=0; 
 }
