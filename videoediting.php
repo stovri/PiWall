@@ -76,16 +76,7 @@
       <input id="video_file" type="file" name="user_video2" value=""></br>
       
       <input type="submit" name="submit" value="Edit">
-      </div>	
-      What is your Gender?
-
-		<select name="formGender">
-
-		<option value="">Select...</option>
-
-		<option value="M">Male</option>
-
-		<option value="F">Female</option>
+      </div>	//do I remove this?
 			</select>
     </form>
 <?php	
