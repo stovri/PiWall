@@ -46,7 +46,7 @@
 		$h->setDuration($ffprobe
 			->format($h->getvideo_file()) // extracts file informations
 			->get('duration')); 
-		$h->setWidth($ffprobe
+		$h->setWidth($ffprob.e
 			->format($h->getvideo_file()) // extracts file informations
 			->get('width')); 
 		$h->setHeight($ffprobe
