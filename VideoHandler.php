@@ -24,7 +24,7 @@ class VideoHandler
      * $db - instance of the Connect class that will handle SQL Queries
      */
  
-    // TODO - Insert your code here
+    // TODO - Insert your class attributd code here
     
     /**
      * The empty constructor should provide default values for the file and 
@@ -33,7 +33,7 @@ class VideoHandler
     public function __construct()
     {
         
-        // TODO - Insert your code here
+        // TODO - Insert your constructor code here
     }
     
     /**
@@ -50,7 +50,7 @@ class VideoHandler
      * id of the submitted file. Used in $_FILE[$id]["tmp_name"], etc.
      */
     public function catchFile($id){
-        // TODO - Insert your code here
+        // TODO - Insert your catch code here
     }
     
     /**
@@ -66,13 +66,14 @@ class VideoHandler
      *  true. Else, delete the file and return false.
      */
     public function isValid(){
-        // TODO - Insert your code here
+        // TODO - Insert your validation code here
     }
     
     /**
      * This should be the same as NameFile->moveIt()
      */
     public function moveTmp(){
+        // TODO - Insert your move code here
         
     }
     
@@ -81,6 +82,7 @@ class VideoHandler
      * an mp4 file using $ffmpeg.
      */
     public function convertVideo(){
+        // TODO - Insert your video conversion code here
         
     }
     
@@ -88,6 +90,7 @@ class VideoHandler
      * createGIF should only convert the video into a GIF file using $ffmpeg.
      */
     public function createGIF(){
+        // TODO - Insert your GIF creation code here
         
     }
     
@@ -95,14 +98,32 @@ class VideoHandler
      * createStill should only convert the video into a still using $ffmpeg.
      */
     public function createStill(){
+        // TODO - Insert your still creation code here
         
     }
     
     /**
-     * insertVideo should generate an SQL QUery based on the stored file 
+     * insertVideo should generate an SQL QUery based on the stored file
      * information, then insert it into the database using $db.
      */
     public function insertVideo(){
+        // TODO - Insert your GIF creation code here
+        
+    }
+    
+    /**
+     * deleteVideo should generate an SQL Query based on the file ID
+     * information, then delete it into the database using $db.
+     */
+    public function deleteVideo(){
+        
+    }
+    
+    /**
+     * deleteVideo(ID) should generate an SQL Query based on the provided
+     * file ID, then delete it into the database using $db.
+     */
+    public function deleteVideo($id){
         
     }
     
@@ -116,8 +137,8 @@ class VideoHandler
     }
     
     /**
-     * loadFromID should load the file information from an SQL quert based on
-     * the file ID.
+     * loadFromID should load the file information from an SQL query based on
+     * the file ID. Once the query is run, it should call loadFromAssoc
      */
     public function loadFromID(){
         
