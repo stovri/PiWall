@@ -8,23 +8,19 @@
 class VideoHandler
 {
 
-    /**
-     * Suggested variables:
-     * $id - the ID of the file in the database
-     * $video_file - directory location of the converted video
-     * $gif_file - directory location of the converted gif
-     * $still_file - directory location of the still frame
-     * $video_file_url - url of the converted video
-     * $gif_file_url - url of the converted gif
-     * $still_file_url - url of the still frame
-     * $width- the x resolution of the video
-     * $height - the y resolution of the video
-     * $duration - length of the video
-     * $ffmpeg - instance of the ffmpeg class to perform operations
-     * $db - instance of the Connect class that will handle SQL Queries
-     */
- 
-    // TODO - Insert your class attributd code here
+Private $id // the ID of the file in the database
+Private $video_file //directory location of the converted video
+Private $gif_file //directory location of the converted gif
+Private $still_file // directory location of the still frame
+Private $video_file_url // url of the converted video
+Private $gif_file_url // url of the converted gif
+Private $still_file_url //url of the still frame
+Private $width // the x resolution of the video
+Private $height // the y resolution of the video
+Private $duration // length of the video
+Private $ffmpeg // instance of the ffmpeg class to perform operations
+Private $db // instance of the Connect class that will handle SQL Queries
+
     
     /**
      * The empty constructor should provide default values for the file and 
