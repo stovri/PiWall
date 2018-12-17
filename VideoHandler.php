@@ -1,5 +1,5 @@
 <?php
-
+require_once("/includes/ConnectClass.php");
 /** 
  * @author Rick Stover
  * This code will have empty functions, which are meant as suggestions as to what
@@ -8,22 +8,44 @@
 class VideoHandler
 {
 
-Private $id // the ID of the file in the database
-Private $video_file //directory location of the converted video
-Private $gif_file //directory location of the converted gif
-Private $still_file // directory location of the still frame
-Private $video_file_url // url of the converted video
-Private $gif_file_url // url of the converted gif
-Private $still_file_url //url of the still frame
-Private $width // the x resolution of the video
-Private $height // the y resolution of the video
-Private $duration // length of the video
-Private $ffmpeg // instance of the ffmpeg class to perform operations
-Private $db // instance of the Connect class that will handle SQL Queries
+    // the ID of the file in the database
+    private $id;
 
-    
+    // directory location of the converted video
+    private $video_file;
+
+    // directory location of the converted gif
+    private $gif_file;
+
+    // directory location of the still frame
+    private $still_file;
+
+    // url of the converted video
+    private $video_file_url;
+
+    // url of the converted gif
+    private $gif_file_url;
+
+    // url of the still frame
+    private $still_file_url;
+
+    // the x resolution of the video
+    private $width;
+
+    // the y resolution of the video
+    private $height;
+
+    // length of the video
+    private $duration;
+
+    // instance of the ffmpeg class to perform operations
+    private $ffmpeg;
+
+    // instance of the Connect class that will handle SQL Queries
+    private $db;
+
     /**
-     * The empty constructor should provide default values for the file and 
+     * The empty constructor should provide default values for the file and
      * initialize the ffmpeg and db objects.
      */
     public function __construct()
@@ -31,129 +53,138 @@ Private $db // instance of the Connect class that will handle SQL Queries
         
         // TODO - Insert your constructor code here
     }
-    
+
     /**
      * The catchFile method should catch a single file from the $_FILE associative
-     * array. It will then do the following:
-     *  -move the temporary file to the input folder
-     *  -validate the file - only videos here!
-     *  -convert the input video to h.264
-     *  -create the GIF
-     *  -create the still
-     *  -insert new row into database
-     *  
-     * @param string id - the key of the $_FILE assoc array relating to the form
-     * id of the submitted file. Used in $_FILE[$id]["tmp_name"], etc.
+     * array.
+     * It will then do the following:
+     * -move the temporary file to the input folder
+     * -validate the file - only videos here!
+     * -convert the input video to h.264
+     * -create the GIF
+     * -create the still
+     * -insert new row into database
+     *
+     * @param
+     *            string id - the key of the $_FILE assoc array relating to the form
+     *            id of the submitted file. Used in $_FILE[$id]["tmp_name"], etc.
      */
-    public function catchFile($id){
+    public function catchFile($id)
+    {
         // TODO - Insert your catch code here
     }
-    
+
     /**
-     * isValid should use ffprobe to get codec of uploaded video. Saw this on the 
+     * isValid should use ffprobe to get codec of uploaded video.
+     * Saw this on the
      * manual page:
      * $ffprobe = FFMpeg\FFProbe::create();
      * $codec=$ffprobe
-     *  ->streams($full_video_path) // extracts streams informations
-     *  ->videos()                      // filters video streams
-     *  ->first()                       // returns the first video stream
-     *  ->get('codec_name');            // returns the codec_name property
-     *  Check the codec against the list of good codecs. If it is good, return 
-     *  true. Else, delete the file and return false.
+     * ->streams($full_video_path) // extracts streams informations
+     * ->videos() // filters video streams
+     * ->first() // returns the first video stream
+     * ->get('codec_name'); // returns the codec_name property
+     * Check the codec against the list of good codecs. If it is good, return
+     * true. Else, delete the file and return false.
      */
-    public function isValid(){
+    public function isValid()
+    {
         // TODO - Insert your validation code here
     }
-    
+
     /**
      * This should be the same as NameFile->moveIt()
      */
-    public function moveTmp(){
+    public function moveTmp()
+    {
         // TODO - Insert your move code here
-        
     }
-    
+
     /**
      * convertVideo should only convert the video from whatever format it was into
      * an mp4 file using $ffmpeg.
      */
-    public function convertVideo(){
+    public function convertVideo()
+    {
         // TODO - Insert your video conversion code here
-        
     }
-    
+
     /**
      * createGIF should only convert the video into a GIF file using $ffmpeg.
      */
-    public function createGIF(){
+    public function createGIF()
+    {
         // TODO - Insert your GIF creation code here
-        
     }
-    
+
     /**
      * createStill should only convert the video into a still using $ffmpeg.
      */
-    public function createStill(){
+    public function createStill()
+    {
         // TODO - Insert your still creation code here
-        
     }
-    
+
     /**
      * insertVideo should generate an SQL QUery based on the stored file
      * information, then insert it into the database using $db.
      */
-    public function insertVideo(){
+    public function insertVideo()
+    {
         // TODO - Insert your GIF creation code here
-        
     }
-    
+
     /**
      * deleteVideo should generate an SQL Query based on the file ID
      * information, then delete it into the database using $db.
      */
-    public function deleteVideo(){
-        
-    }
-    
+    public function deleteVideo()
+    {}
+
     /**
      * deleteVideo(ID) should generate an SQL Query based on the provided
      * file ID, then delete it into the database using $db.
      */
-    public function deleteVideo($id){
-        
-    }
-    
+    public function deleteVideo($id)
+    {}
+
     /**
      * loadFromAssoc should load the file information from an associative
      * array, like the result for an SQL query.
-     * @param assoc_array $assoc is the result of a database query
+     *
+     * @param assoc_array $assoc
+     *            is the result of a database query
      */
-    public function loadFromAssoc($assoc){
-        
-    }
-    
+    public function loadFromAssoc($assoc)
+    {}
+
     /**
      * loadFromID should load the file information from an SQL query based on
-     * the file ID. Once the query is run, it should call loadFromAssoc
+     * the file ID.
+     * Once the query is run, it should call loadFromAssoc
      */
-    public function loadFromID(){
-        
-    }
-    
+    public function loadFromID()
+    {}
+
     /**
      * displayEditCell should return a table cell that contains a GIF of the file,
      * sized appropriately, and links to the edit page for the file
      */
-    public function displayEditCell(){
-        
-    }
-    
+    public function displayEditCell()
+    {}
+
     /**
      * displayDeleteCell should return a table cell that contains a GIF of the file,
      * sized appropriately, and links to the delete page for the file
      */
-    public function displayDeleteCell(){
-        
-    }
+    public function displayDeleteCell()
+    {}
+
+    /**
+     * displayCell should display the thumbnail of the video in a table cell, and link to a
+     * pop-up of the video in a new window.
+     */
+    public function displayCell()
+    {}
 }
 
