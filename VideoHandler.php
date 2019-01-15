@@ -297,6 +297,8 @@ class VideoHandler
      * pop-up of the video in a new window.
      */
     public function displayCell()
-    {}
+    {
+        
+    }
 }
 
