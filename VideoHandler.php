@@ -9,8 +9,23 @@ require_once '/home/pi/vendor/autoload.php';
 class VideoHandler
 {
 
+<<<<<<< HEAD
     // the ID of the file in the database
     private $id;
+=======
+Private $id; // the ID of the file in the database
+Private $video_file; //directory location of the converted video
+Private $gif_file; //directory location of the converted gif
+Private $still_file; // directory location of the still frame
+Private $video_file_url; // url of the converted video
+Private $gif_file_url; // url of the converted gif
+Private $still_file_url; //url of the still frame
+Private $width; // the x resolution of the video
+Private $height; // the y resolution of the video
+Private $duration; // length of the video
+Private $ffmpeg; // instance of the ffmpeg class to perform operations
+Private $db; // instance of the Connect class that will handle SQL Queries
+>>>>>>> branch 'Upload_Page' of https://github.com/stovri/PiWall.git
 
     // directory location of the converted video
     private $video_file;
@@ -69,7 +84,8 @@ class VideoHandler
         $this->video_file_url=$url."output/";
         $this->db=new Connect("tiger","Tigers17");
         
-        // TODO - Insert your constructor code here
+      $this->width=1080;
+      $this->height=720;
     }
 
     /**

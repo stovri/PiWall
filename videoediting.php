@@ -15,18 +15,6 @@
 		style="width:450px;height:300px;">
       <p>Make sure that your uploaded file name is not containing any special characters and or white spaces! You can convert your video to gif or mp4 format with this tool. You can also cut the duration of your video.</p>
     </div>
-     
-    <form method="post" action="" enctype="multipart/form-data">
-      <div id="form-contents">
-      <label for="video_file">Video to Edit:</label> </br>
-      <input id="video_file" type="file" name="user_video1" value=""></br>
-      <!--<label for="extension">Convert to:</label></br>
-          <select name="extension" id="extension">
-          <option value="none">Default</option>
-          <option value="gif">gif</option>
-          <option value="mp4">mp4</option>
-           You can add other format here 
-          </select></br>-->
          
       
       <label for="start_from_sec">Start From Second:</label></br>
