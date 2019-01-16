@@ -110,11 +110,18 @@ class VideoHandler
                 $this->createGIF();
                 $this->createStill();
                 $this->insertVideo();
+                $output="The video was uploaded and converted successfully!";
             }
             else{
                 $this->removeVideo($this->input_video_file);
+                $output="The file was not a video.";
             }
+            
         }
+        else{
+            $output="There was a problem moving the video.";
+        }
+        return $output;
     }
 
     /**
