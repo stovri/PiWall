@@ -1,5 +1,7 @@
 <?php
+
 require_once '/includes/connectClass.php';
+
 require_once '/home/pi/vendor/autoload.php';
 /** 
  * @author Rick Stover
@@ -8,7 +10,6 @@ require_once '/home/pi/vendor/autoload.php';
  */
 class VideoHandler
 {
-
     // the ID of the file in the database
     private $id;
 
@@ -22,22 +23,16 @@ class VideoHandler
 
     // directory location of the still frame
     private $still_file;
-
     // url of the converted video
     private $video_file_url;
-
     // url of the converted gif
     private $gif_file_url;
-
     // url of the still frame
     private $still_file_url;
-
     // the x resolution of the video
     private $width;
-
     // the y resolution of the video
     private $height;
-
     // length of the video
     private $duration;
 
@@ -53,7 +48,9 @@ class VideoHandler
      */
     public function __construct()
     {
-        $url=HTTP_TYPE."://".HTTP_ROOT.substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT'])).'/';
+
+        $url='HTTP_TYPE'."://".'HTTP_ROOT'.substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT'])).'/';
+
         $dir=$_SERVER['DOCUMENT_ROOT'];
         $this->table="VideoFiles";
         $this->id=0;
@@ -90,21 +87,23 @@ class VideoHandler
      */
     public function catchFile($id)
     {
-        $tmp_name-$_FILES[$id]["tmp_name"];
+
+        $tmp_name=$_FILES[$id]["tmp_name"];
         // file name with extension
-        $file = $theFile["name"];
+        $file = $_FILES[$id]["name"];
         // name without extension
         $file_name = pathinfo($file, PATHINFO_FILENAME);
-        $tmp = explode('.', $theFile["name"]);
+        $tmp = explode('.', $_FILES[$id]["name"]);
         $ext = end($tmp);
         $date = date("Y-m-d H:i:s");
         $uploadtime = strtotime($date);
-        $this->input_video_file.=$uploadtime.$ext;
+        $this->input_video_file.=$uploadtime.".".$ext;
+
         $this->video_file .= $uploadtime . ".mp4";
         $this->gif_file .= $uploadtime . ".gif";
         $this->still_file .= $uploadtime . ".jpeg";
         if($this->moveTmp($tmp_name)){
-            if(isValid()){
+            if($this->isValid()){
                 $this->convertVideoFormat();
                 $this->loadFromFile();
                 $this->createGIF();
@@ -131,14 +130,10 @@ class VideoHandler
      */
     public function isValid()
     {
-        // TODO - Insert your validation code here
+
         $ffprobe = FFMpeg\FFProbe::create();
-        $codec=$ffprobe
-        ->streams($this->video_file) // extracts streams informations
-        ->videos() // filters video streams
-        ->first() // returns the first video stream
-        ->get('codec_type'); // returns the codec_type property
-        if($codec=='video')
+        $codec=$ffprobe->streams($this->input_video_file)->videos()->first();
+        if($codec!=null)
             return true;
         return false;
     }
@@ -162,6 +157,7 @@ class VideoHandler
                 throw new Exception('Could not delete file: ' . $this->filePath);
         }
         return true;
+
     }
     /**
      * convertVideo converts the video from whatever format it was into an mp4 
@@ -171,7 +167,7 @@ class VideoHandler
     {
         $ffmpeg=FFMpeg\FFMpeg::create();
         $format = new FFMpeg\Format\Video\X264('aac');
-        $video = $ffmpeg->open($this->video_file);
+        $video = $ffmpeg->open($this->input_video_file);
         /* This section of code will be useful when we are trimming and resizing. 
          * It is unneccessary when we are just changing the file format.
          * $clip = $video->clip(FFMpeg\Coordinate\TimeCode::fromSeconds(0), 
@@ -229,8 +225,9 @@ class VideoHandler
     public function insertVideo()
     {
         $sql="INSERT INTO ".$this->table.
-            " (File, Still, Gif, RexX, ResY, Seconds) VALUES".
-            " (".$this->video_file.", ".$this->still_file.", ".$this->gif_file.", ". $this->width.
+
+            " (File, Still, Gif, ResX, ResY, Seconds) VALUES".
+            " ('".$this->video_file."', '".$this->still_file."', '".$this->gif_file."', ". $this->width.
             ", ".$this->height.", ".$this->duration.")";
         $this->db->runQuery($sql);
     }
@@ -239,33 +236,32 @@ class VideoHandler
      * deleteVideo should generate an SQL Query based on the file ID
      * information, then delete it into the database using $db.
      */
-    public function deleteVideo()
+
+
+    /**
+
+    public function deleteVideo($id="")
     {
         $this->deleteVideo($this->id);
     }
+     /**
 
-    /**
-     * deleteVideo(ID) should generate an SQL Query based on the provided
-     * file ID, then delete it into the database using $db.
-     */
-    public function deleteVideo($id)
-    {}
-
-    /**
      * loadFromFile will use FFProbe and FFMpeg to load the file information
      * into the class variables.
      */
     public function loadFromFile(){
         $ffprobe = FFMpeg\FFProbe::create();
-        $this->duration=$ffprobe
-            ->format($this->video_file) // extracts file informations
-            ->get('duration');
-        $this->width=$ffprobe
-            ->format($this->video_file) // extracts file informations
-            ->get('width');
-        $this->height=$ffprobe
-            ->format($this->video_file) // extracts file informations
-            ->get('height');        
+
+ $video_dimensions = $ffprobe
+    ->streams($this->video_file)   // extracts streams informations
+    ->videos()                      // filters video streams
+    ->first()                       // returns the first video stream
+    ->getDimensions();              // returns a FFMpeg\Coordinate\Dimension object
+$this->width = $video_dimensions->getWidth();
+$this->height = $video_dimensions->getHeight();
+
+$this->duration = $ffprobe->format($this->video_file)->get('duration');
+
     }
     /**
      * loadFromAssoc should load the file information from an associative
@@ -275,7 +271,9 @@ class VideoHandler
      *            is the result of a database query
      */
     public function loadFromAssoc($assoc)
+
     {}
+
 
     /**
      * loadFromID should load the file information from an SQL query based on
@@ -308,4 +306,3 @@ class VideoHandler
         
     }
 }
-
