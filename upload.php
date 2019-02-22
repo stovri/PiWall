@@ -20,11 +20,13 @@
     </form>
     <?php
 	require '/home/pi/vendor/autoload.php';
+
 	require_once 'VideoHandler.php';
     if(isset($_POST["submit"])) {	
         $vidHandle = new VideoHandler();
         $message=$vidHandle->catchFile('user_video');
         echo $message."Hello";
+
     }
 ?>
 

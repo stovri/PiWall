@@ -1,5 +1,7 @@
 <?php
-require_once 'includes/connectClass.php';
+
+require_once '/includes/connectClass.php';
+
 require_once '/home/pi/vendor/autoload.php';
 /** 
  * @author Rick Stover
@@ -10,6 +12,7 @@ class VideoHandler
 {
     // the ID of the file in the database
     private $id;
+
     // directory location of the converted video
     private $video_file;
     // directory location of the uploaded video
@@ -17,6 +20,7 @@ class VideoHandler
     
     // directory location of the converted gif
     private $gif_file;
+
     // directory location of the still frame
     private $still_file;
     // url of the converted video
@@ -31,18 +35,22 @@ class VideoHandler
     private $height;
     // length of the video
     private $duration;
+
     // instance of the Connect class that will handle SQL Queries
     private $db;
     
     // name of the table storing the file information
     private $table;
+
     /**
      * The empty constructor should provide default values for the file and
      * initialize the ffmpeg and db objects.
      */
     public function __construct()
     {
+
         $url='HTTP_TYPE'."://".'HTTP_ROOT'.substr(__DIR__, strlen($_SERVER['DOCUMENT_ROOT'])).'/';
+
         $dir=$_SERVER['DOCUMENT_ROOT'];
         $this->table="VideoFiles";
         $this->id=0;
@@ -61,6 +69,7 @@ class VideoHandler
       $this->width=1080;
       $this->height=720;
     }
+
     /**
      * The catchFile method should catch a single file from the $_FILE associative
      * array.
@@ -78,6 +87,7 @@ class VideoHandler
      */
     public function catchFile($id)
     {
+
         $tmp_name=$_FILES[$id]["tmp_name"];
         // file name with extension
         $file = $_FILES[$id]["name"];
@@ -88,6 +98,7 @@ class VideoHandler
         $date = date("Y-m-d H:i:s");
         $uploadtime = strtotime($date);
         $this->input_video_file.=$uploadtime.".".$ext;
+
         $this->video_file .= $uploadtime . ".mp4";
         $this->gif_file .= $uploadtime . ".gif";
         $this->still_file .= $uploadtime . ".jpeg";
@@ -111,6 +122,7 @@ class VideoHandler
         }
         return $output;
     }
+
     /**
      * isValid uses ffprobe to get codec_type of uploaded video, checks
      *  the codec type. If it is video, return true. Else, delete the 
@@ -118,12 +130,14 @@ class VideoHandler
      */
     public function isValid()
     {
+
         $ffprobe = FFMpeg\FFProbe::create();
         $codec=$ffprobe->streams($this->input_video_file)->videos()->first();
         if($codec!=null)
             return true;
         return false;
     }
+
     /**
      * This uses the move_uploaded_file to put the temporary file in the 
      * input directory for conversion.
@@ -133,6 +147,7 @@ class VideoHandler
         $moved = move_uploaded_file($tmp_name, $this->input_video_file);
         return $moved;
     }
+
     /**
      * This method will remove the physical copy of the file.
      */
@@ -142,6 +157,7 @@ class VideoHandler
                 throw new Exception('Could not delete file: ' . $this->filePath);
         }
         return true;
+
     }
     /**
      * convertVideo converts the video from whatever format it was into an mp4 
@@ -165,6 +181,7 @@ class VideoHandler
         $video->save($format,$this->video_file);
         $this->removeVideo($this->input_video_file);
     }
+
     /**
      * createGIF should only convert the video into a GIF file using $ffmpeg.
      */
@@ -182,6 +199,7 @@ class VideoHandler
         ->gif(FFMpeg\Coordinate\TimeCode::fromSeconds(0), new FFMpeg\Coordinate\Dimension(320, 240), 3)
         ->save($this->gif_file);
     }
+
     /**
      * createStill should only convert the video into a still using $ffmpeg.
      */
@@ -199,6 +217,7 @@ class VideoHandler
         $frame = $video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(0));
         $frame->save($this->still_file);        
     }
+
     /**
      * insertVideo should generate an SQL QUery based on the stored file
      * information, then insert it into the database using $db.
@@ -206,25 +225,33 @@ class VideoHandler
     public function insertVideo()
     {
         $sql="INSERT INTO ".$this->table.
+
             " (File, Still, Gif, ResX, ResY, Seconds) VALUES".
             " ('".$this->video_file."', '".$this->still_file."', '".$this->gif_file."', ". $this->width.
             ", ".$this->height.", ".$this->duration.")";
         $this->db->runQuery($sql);
     }
+
     /**
      * deleteVideo should generate an SQL Query based on the file ID
      * information, then delete it into the database using $db.
      */
+
+
+    /**
+
     public function deleteVideo($id="")
     {
         $this->deleteVideo($this->id);
     }
      /**
+
      * loadFromFile will use FFProbe and FFMpeg to load the file information
      * into the class variables.
      */
     public function loadFromFile(){
         $ffprobe = FFMpeg\FFProbe::create();
+
  $video_dimensions = $ffprobe
     ->streams($this->video_file)   // extracts streams informations
     ->videos()                      // filters video streams
@@ -234,6 +261,7 @@ $this->width = $video_dimensions->getWidth();
 $this->height = $video_dimensions->getHeight();
 
 $this->duration = $ffprobe->format($this->video_file)->get('duration');
+
     }
     /**
      * loadFromAssoc should load the file information from an associative
@@ -243,9 +271,10 @@ $this->duration = $ffprobe->format($this->video_file)->get('duration');
      *            is the result of a database query
      */
     public function loadFromAssoc($assoc)
-    {
-		
-	}
+
+    {}
+
+
     /**
      * loadFromID should load the file information from an SQL query based on
      * the file ID.
@@ -253,18 +282,21 @@ $this->duration = $ffprobe->format($this->video_file)->get('duration');
      */
     public function loadFromID()
     {}
+
     /**
      * displayEditCell should return a table cell that contains a GIF of the file,
      * sized appropriately, and links to the edit page for the file
      */
     public function displayEditCell()
     {}
+
     /**
      * displayDeleteCell should return a table cell that contains a GIF of the file,
      * sized appropriately, and links to the delete page for the file
      */
     public function displayDeleteCell()
     {}
+
     /**
      * displayCell should display the thumbnail of the video in a table cell, and link to a
      * pop-up of the video in a new window.
